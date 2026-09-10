@@ -1,44 +1,54 @@
 # OPC UA Client Testing & Automation Framework
 
-> Python-based industrial communication testing framework for automated OPC UA client-server validation using a deterministic simulated industrial plant.
+<p align="center">
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue)
-![OPC UA](https://img.shields.io/badge/Protocol-OPC%20UA-orange)
-![Pytest](https://img.shields.io/badge/Test%20Framework-Pytest-green)
-![CI](https://img.shields.io/badge/CI-GitHub%20Actions-black)
+**A Python-based industrial communication testing and automation framework for repeatable OPC UA client-server validation.**
+
+</p>
+
+<p align="center">
+
+![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-Test%20Automation-0A9EDC?style=for-the-badge)
+![OPC UA](https://img.shields.io/badge/Protocol-OPC%20UA-FF8C00?style=for-the-badge)
+![asyncua](https://img.shields.io/badge/asyncua-2.x-green?style=for-the-badge)
+![GitHub Actions](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
+
+</p>
 
 ---
 
-## Overview
+# 📌 Overview
 
-This project is a **repeatable OPC UA client testing and automation framework** built with Python, `asyncua`, and Pytest.
+This project is a **repeatable OPC UA client testing and automation framework** built with **Python, asyncua, and Pytest**.
 
 It provides a controlled local OPC UA environment where client-server communication can be tested automatically across functional, subscription, negative, and security scenarios.
 
 The framework validates:
 
-- OPC UA connection and session handling
-- Address-space browsing
-- Data read/write operations
-- OPC UA method calls
-- Subscriptions and monitored items
-- Username/password authentication
-- X.509 certificate trust
-- Secure communication
-- Negative and failure scenarios
-- Automated test reporting
-- Code coverage
-- Continuous integration
+- 🔌 OPC UA connection and session handling
+- 🔎 Address-space browsing
+- 📖 Data read operations
+- ✏️ Data write operations
+- ⚙️ OPC UA method calls
+- 📡 Subscriptions and monitored items
+- 🔐 Username/password authentication
+- 📜 X.509 certificate trust
+- 🛡️ OPC UA SecureChannel security
+- ❌ Negative and failure scenarios
+- 📊 Automated test reporting
+- 📈 Code coverage
+- 🚀 Continuous Integration using GitHub Actions
 
 The main objective is to demonstrate how industrial communication interfaces can be tested **systematically, repeatedly, and automatically** instead of relying only on manual verification.
 
-> **Project scope:** This is a portfolio and learning project using a simulated industrial plant. It is **not an ABB production system, ABB hardware integration, or a representation of ABB's internal software architecture.**
+> **Project Scope:** This is an independent portfolio and learning project using a simulated industrial plant. It is **not an ABB production system, ABB hardware integration, or a representation of ABB's internal software architecture.**
 
 ---
 
-## Why This Project?
+# 🎯 Objective & Problem Statement
 
-Industrial automation systems rely on reliable communication between controllers, devices, applications, and supervisory systems.
+Industrial automation systems depend on reliable communication between controllers, devices, applications, and supervisory systems.
 
 Manual communication testing can become:
 
@@ -47,121 +57,225 @@ Manual communication testing can become:
 - Inconsistent between test runs
 - Difficult to scale
 - Difficult to validate for failure conditions
-- Difficult to maintain as test coverage grows
+- Difficult to maintain as test coverage increases
 
 This framework addresses these challenges by providing a **deterministic and isolated OPC UA test environment**.
 
-The testing workflow is:
+### Testing Philosophy
 
 ```text
-Controlled Environment
-        ↓
-OPC UA Client Connection
-        ↓
-Communication & Control
-        ↓
-Functional Validation
-        ↓
-Negative & Security Testing
-        ↓
-Reports & Coverage
-        ↓
-Continuous Integration
-Architecture
-Main Components
-Component	Responsibility
-Pytest	Test execution, assertions, markers and parametrization
-Test Fixtures	Creates isolated server/client environments for integration tests
-OPCUATestClient	Encapsulates low-level asyncua client operations
-OPCUATestServer	Hosts the simulated industrial plant
-Security Layer	Handles OPC UA security policies, certificates and authentication
-Configuration	Centralizes endpoints, timeouts and reusable test data
-Reporting	Generates HTML reports, logs and coverage
-GitHub Actions	Executes automated tests in CI
+┌──────────────────────────┐
+│  Controlled Environment  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ OPC UA Client Connection │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Communication & Control  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Functional Validation   │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Negative & Security Test │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│ Reports & Code Coverage  │
+└────────────┬─────────────┘
+             ↓
+┌──────────────────────────┐
+│     CI/CD Validation     │
+└──────────────────────────┘
+🏗️ System Architecture
 
-Function-scoped fixtures are used to create a clean server and connected client for integration tests, reducing dependencies between individual test cases.
+The framework follows a layered architecture where Pytest drives the test scenarios, fixtures create an isolated environment, the client wrapper handles OPC UA operations, and the simulated industrial server provides the test target.
 
-Simulated Industrial Plant
+                         ┌─────────────────────────┐
+                         │       PYTEST SUITE      │
+                         │                         │
+                         │ Functional / Security   │
+                         │ Subscription / Negative │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │     TEST FIXTURES       │
+                         │                         │
+                         │ Server lifecycle        │
+                         │ Client lifecycle        │
+                         │ Test isolation          │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │    OPCUATestClient      │
+                         │                         │
+                         │ Connection              │
+                         │ Browse                  │
+                         │ Read / Write             │
+                         │ Methods                 │
+                         │ Subscriptions           │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │   OPC UA SECURECHANNEL  │
+                         │                         │
+                         │ Basic256Sha256          │
+                         │ Sign                    │
+                         │ SignAndEncrypt          │
+                         │ Authentication          │
+                         │ Certificate Trust       │
+                         └────────────┬────────────┘
+                                      │
+                                      ▼
+              ┌────────────────────────────────────────────┐
+              │       SIMULATED INDUSTRIAL OPC UA SERVER   │
+              │                                            │
+              │              IndustrialPlant               │
+              │                                            │
+              │  ┌──────────────┐    ┌──────────────────┐  │
+              │  │   Sensors    │    │      Motor       │  │
+              │  │              │    │                  │  │
+              │  │ Temperature  │    │ Speed            │  │
+              │  │ Pressure     │    │ Current          │  │
+              │  │ Vibration    │    │ Status           │  │
+              │  └──────────────┘    └──────────────────┘  │
+              │                                            │
+              │  Methods: StartMotor() / StopMotor()       │
+              └────────────────────────────────────────────┘
 
-The framework uses a local OPC UA server representing a simplified industrial plant.
 
-OPC UA Endpoint
+                         ┌─────────────────────────┐
+                         │      TEST EVIDENCE      │
+                         │                         │
+                         │ HTML Reports            │
+                         │ Coverage                │
+                         │ Logs                    │
+                         │ CI Artifacts            │
+                         └─────────────────────────┘
+🔗 OPC UA Test Target
+
+The project uses a localhost-only simulated OPC UA server.
+
+Endpoint
 opc.tcp://127.0.0.1:4840/abb-test-server/
 
-The simulated IndustrialPlant exposes representative sensor and motor data.
+The server exposes a simplified IndustrialPlant containing representative process and motor data.
 
-Sensor Variables
+🌡️ Sensor Variables
 Temperature
 Pressure
 Vibration
-Motor Variables
+⚙️ Motor Variables
 Speed
 Current
 Status
-Control Methods
+🕹️ Control Methods
 StartMotor()
 StopMotor()
 
 This provides a realistic test target for both monitoring and control-oriented OPC UA operations.
 
-Test Coverage
+🧪 Test Coverage
 
-The test suite is organized around different communication and validation concerns.
+The framework separates tests according to the behavior being validated.
 
 tests/
 │
 ├── functional/
 │   ├── connection
 │   ├── browse
-│   ├── read/write
+│   ├── read_write
 │   └── methods
 │
 ├── subscription/
-│   └── monitored items
+│   └── monitored_items
 │
 ├── security/
 │   ├── authentication
-│   ├── certificate trust
-│   └── secure communication
+│   ├── certificate_trust
+│   └── secure_modes
 │
 └── negative/
-    └── invalid/failure scenarios
-Functional Testing
+    └── failure_scenarios
+🔌 Functional Testing
 
-Validates core OPC UA operations including:
+Functional tests validate the core OPC UA communication workflow.
 
-Establishing client connections
-Browsing the OPC UA address space
+Covered Operations
+Establishing OPC UA client connections
+Creating sessions
+Browsing the address space
+Discovering nodes
 Reading node values
 Writing supported values
-Calling server methods
-Validating returned values and status codes
-Subscription Testing
+Calling OPC UA methods
+Validating returned values
+Validating operation results and failures
 
-Validates OPC UA subscriptions and monitored items.
+Example workflow:
 
-Instead of continuously polling values, the client can subscribe to changes from the server and validate that monitored data is delivered correctly.
+Client
+  │
+  ├── Connect
+  │
+  ├── Browse
+  │
+  ├── Read Temperature
+  │
+  ├── Write Value
+  │
+  ├── Call StartMotor()
+  │
+  └── Validate Result
+📡 Subscription & Monitored Item Testing
 
-This helps verify event-driven communication behavior commonly used in industrial systems.
+The framework validates OPC UA subscriptions and monitored items.
 
-Negative Testing
+Instead of continuously polling values, the client can subscribe to changes generated by the server.
 
-The framework also validates expected failure behavior.
+OPC UA Server
+      │
+      │ Value Change
+      ▼
+Monitored Item
+      │
+      ▼
+Subscription
+      │
+      ▼
+OPC UA Client
+      │
+      ▼
+Test Assertion
 
-Examples include:
+This validates event-driven communication behavior commonly used in industrial monitoring systems.
+
+❌ Negative Testing
+
+A reliable automation framework should validate not only the happy path, but also expected failure behavior.
+
+Negative tests cover scenarios such as:
 
 Invalid credentials
 Unknown users
 Untrusted certificates
 Invalid security configuration
 Communication failures
-Unexpected server-side responses
+Unexpected server responses
+Rejected authentication attempts
 
-Testing failure scenarios is important because a reliable automation framework should validate both expected behavior and controlled failure behavior.
+The objective is to verify that failures are detected and handled predictably.
 
-OPC UA Security
+🔐 OPC UA Security Testing
 
-The security tests use OPC UA's native SecureChannel mechanisms.
+Security testing uses OPC UA's native SecureChannel mechanisms.
 
 Security Policy
 Basic256Sha256
@@ -176,7 +290,41 @@ SignAndEncrypt
 
 Provides message integrity and authentication while also protecting the confidentiality of SecureChannel messages through encryption.
 
+Security Scenarios
+
 The framework validates:
+
+┌──────────────────────────────┐
+│ Username / Password Auth     │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Valid Credentials            │
+└──────────────────────────────┘
+
+┌──────────────────────────────┐
+│ Invalid / Unknown Credentials│
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Authentication Rejected      │
+└──────────────────────────────┘
+
+┌──────────────────────────────┐
+│ Client X.509 Certificate     │
+└──────────────┬───────────────┘
+               ↓
+┌──────────────────────────────┐
+│ Trust Validation             │
+└──────────────┬───────────────┘
+               ↓
+       ┌───────┴────────┐
+       ↓                ↓
+   Trusted           Untrusted
+       ↓                ↓
+   Accepted          Rejected
+
+The project also validates:
 
 Username/password authentication
 Invalid credentials
@@ -186,13 +334,13 @@ Untrusted client certificates
 Expected server certificate validation
 Secure communication configuration
 
-Note: OPC UA SecureChannel security is different from TLS transport security.
+Important: OPC UA SecureChannel security is different from TLS transport security.
 
 Development certificates are generated dynamically for testing.
 
-Private keys, credentials, and secrets are never committed to the repository.
+Private keys, credentials, and secrets are not committed to the repository.
 
-Project Structure
+📁 Project Structure
 OPC-UA-Testing/
 │
 ├── src/
@@ -219,13 +367,32 @@ OPC-UA-Testing/
 │   └── framework.yaml
 │
 ├── reports/
+│
 ├── logs/
+│
 ├── pyproject.toml
+│
+├── .gitignore
+│
 └── README.md
 
-The framework separates the client abstraction, simulated server, configuration, utilities, and tests, making it easier to maintain and extend.
+The framework separates:
 
-Technology Stack
+Client Logic
+     +
+Server Simulation
+     +
+Configuration
+     +
+Certificate Utilities
+     +
+Test Suites
+     +
+Reporting
+
+This separation makes the framework easier to maintain and extend.
+
+🛠️ Technology Stack
 Technology	Purpose
 Python 3.11+	Framework implementation
 asyncua 2.x	OPC UA client/server communication
@@ -233,64 +400,73 @@ Pytest	Test automation
 pytest-asyncio	Async test execution
 pytest-html	HTML test reports
 pytest-cov	Code coverage
-PyYAML	Configuration and test data
-GitHub Actions	Continuous integration
+PyYAML	Configuration and reusable test data
+GitHub Actions	Continuous Integration
 X.509 Certificates	OPC UA application trust and security
-Installation
+🚀 Installation
 1. Clone the Repository
 git clone https://github.com/KhushbuChauhan-06/OPC-UA-Testing.git
 cd OPC-UA-Testing
-2. Create a Virtual Environment
+2. Create Virtual Environment
 py -3.11 -m venv .venv
-3. Activate the Virtual Environment
+3. Activate Virtual Environment
 .\.venv\Scripts\Activate.ps1
-4. Install the Project
+4. Upgrade pip
 python -m pip install --upgrade pip
+5. Install the Project
 pip install -e .
-Running the Tests
+▶️ Running the Test Suite
 
 The test fixtures automatically start and manage the simulated OPC UA server during integration tests.
 
-Run the Complete Test Suite
+Run All Tests
 pytest
-Run Specific Test Categories
+Run Smoke Tests
 pytest -m smoke
+Run Functional Tests
 pytest -m functional
+Run Subscription Tests
 pytest -m subscription
+Run Security Tests
 pytest -m security
+Run Negative Tests
 pytest -m negative
+🖥️ Running the OPC UA Server Manually
 
-This allows developers to execute either the complete validation suite or a focused group of tests during development.
-
-Running the OPC UA Server Manually
-
-The server can also be started independently for manual testing and experimentation.
+The simulated server can also be started independently for manual experimentation.
 
 py -3.11 -m opcua_framework.server
 
-The default endpoint is:
+Default endpoint:
 
 opc.tcp://127.0.0.1:4840/abb-test-server/
 
-A different local endpoint can be configured using:
+To use another local port:
 
 $env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/abb-test-server/"
-Test Reports & Code Coverage
-Generate an HTML Test Report
+
+Then run:
+
+pytest
+📊 Test Reports & Code Coverage
+Generate HTML Test Report
 pytest --html=reports/report.html --self-contained-html
 Generate Code Coverage
 pytest --cov=src --cov-report=html:reports/coverage
 
-Generated artifacts include:
+Generated artifacts:
 
 reports/
+│
 ├── report.html
+│
 └── coverage/
+    └── index.html
 
 logs/
 └── test-run.log
 
-The reports provide visibility into:
+Reports provide visibility into:
 
 Test names
 Pass/fail status
@@ -298,24 +474,7 @@ Execution duration
 Captured output
 Failure details
 Code coverage
-CI/CD
-
-The project uses GitHub Actions to automatically execute the test suite on:
-
-Pushes
-Pull requests
-
-The CI workflow follows:
-
-The CI environment does not require a persistent OPC UA server.
-
-Test fixtures automatically create and manage the simulated server, allowing the same integration tests to run consistently in local development and CI.
-
-Only test logs and reports are uploaded as CI artifacts.
-
-Private keys, certificates containing sensitive material, credentials, and secrets are excluded from source control and CI artifacts.
-
-Configuration
+⚙️ Configuration
 
 Reusable non-secret configuration is stored in:
 
@@ -325,129 +484,211 @@ Configuration includes:
 
 OPC UA endpoint
 Connection timeouts
-Subscription publishing interval
+Publishing interval
 Sensor ranges
-Test data
+Reusable test data
 Security-related test configuration
 
 The endpoint can be overridden using:
 
 $env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/abb-test-server/"
+Security Rule
 
 Credentials and private-key paths must never be committed to Git.
 
-Development Certificates
+📜 Development Certificates
 
-Development certificates can be generated for manual security experiments:
+Development certificates can be generated for local security experiments.
 
 py -3.11 -m opcua_framework.utils.generate_certificates
 
-These certificates are intended for local development and testing only.
+These certificates are intended for development and testing only.
 
 The project does not attempt to reproduce a production PKI/CA infrastructure.
 
-Engineering Focus
+🔄 CI/CD with GitHub Actions
 
-This project demonstrates practical skills relevant to industrial software, communication testing, and test automation.
+The project uses GitHub Actions to automatically execute the test suite on:
+
+Pushes
+Pull Requests
+CI Pipeline
+┌───────────────────────┐
+│   Code Push / PR      │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│ Setup Python 3.11     │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│ Install Dependencies  │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│ Run Complete Test     │
+│ Suite                 │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│ Generate Reports      │
+│ & Coverage            │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│ Publish Test          │
+│ Artifacts             │
+└───────────────────────┘
+
+The CI environment does not require a persistent OPC UA server.
+
+Test fixtures automatically create and manage the simulated server, allowing the same integration tests to execute consistently in local development and CI.
+
+Only appropriate test logs and reports are published as CI artifacts.
+
+Private keys, credentials, and secrets are excluded from source control and CI artifacts.
+
+🧩 Test Isolation & Fixture Design
+
+The framework uses function-scoped fixtures to create controlled test environments.
+
+Conceptually:
+
+Test Starts
+     │
+     ▼
+Start OPC UA Server
+     │
+     ▼
+Create Client
+     │
+     ▼
+Execute Test
+     │
+     ▼
+Validate Result
+     │
+     ▼
+Disconnect Client
+     │
+     ▼
+Stop Server
+     │
+     ▼
+Clean Test Environment
+
+This approach reduces test-order dependencies and makes individual integration tests easier to reproduce.
+
+🧠 Engineering Principles
+🔁 Repeatability
+
+The same test scenario should produce consistent results against the same deterministic environment.
+
+🧪 Isolation
+
+Each integration test starts from a controlled client/server state to minimize dependencies between test cases.
+
+🧱 Abstraction
+
+Low-level OPC UA operations are encapsulated inside OPCUATestClient, allowing test cases to focus on expected system behavior.
+
+❌ Failure Awareness
+
+The framework validates both successful operations and expected failure conditions.
+
+🔐 Security Validation
+
+Authentication, certificates, trust relationships, and SecureChannel modes are treated as testable system behavior.
+
+🤖 Automation
+
+The same test suite can run locally and inside CI without requiring manual server setup.
+
+🎯 Engineering Skills Demonstrated
+
+This project demonstrates practical skills relevant to industrial software, communication testing, QA automation, and embedded/automation-oriented development.
 
 Industrial Communication
 OPC UA client-server architecture
 OPC UA address-space browsing
 Node interaction
-Data read/write operations
+Data read/write
 OPC UA methods
 Subscriptions
 Monitored items
 Test Automation
-Pytest-based test architecture
-Fixtures and test isolation
+Pytest architecture
+Fixtures
+Test isolation
 Functional testing
 Negative testing
 Regression testing
+Async test execution
 Automated reporting
 Code coverage
 Security Testing
 OPC UA SecureChannel
-Security policies
+Basic256Sha256
 Sign mode
 SignAndEncrypt mode
 Username authentication
-X.509 certificate trust
-Certificate-based negative testing
+X.509 certificates
+Certificate trust validation
+Security negative testing
 Software Engineering
+Python
+Asynchronous programming
 Modular architecture
 Configuration-driven testing
-Reusable client abstraction
-Asynchronous programming
-CI automation
-Test evidence and reporting
-Design Principles
+Reusable abstractions
+CI/CD
+Automated test evidence
+🔍 What This Project Demonstrates
 
-The framework is built around a few key engineering principles:
+The overall engineering workflow can be summarized as:
 
-Repeatability
-
-Tests should produce consistent results when executed against the same deterministic environment.
-
-Isolation
-
-Each integration test should start from a controlled client/server state to minimize test-order dependencies.
-
-Abstraction
-
-Low-level OPC UA communication is encapsulated inside the client wrapper so test cases remain readable and focused on behavior.
-
-Failure Awareness
-
-The test suite validates both successful operations and expected failure conditions.
-
-Security by Testing
-
-Authentication, certificates, trust relationships, and SecureChannel modes are treated as testable system behavior rather than configuration that is assumed to be correct.
-
-Automation
-
-The same test suite can run locally and inside CI without requiring manual server setup.
-
-Troubleshooting
-Python Is Not Found
-
-If PowerShell cannot find Python:
-
-py --version
-
-Install Python 3.11+ and reopen PowerShell.
-
-Dependencies Are Missing
-
-Activate the virtual environment and reinstall the project:
-
-.\.venv\Scripts\Activate.ps1
-pip install -e .
-Port 4840 Is Already in Use
-
-Stop the process using the port or configure another local endpoint:
-
-$env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/abb-test-server/"
-Security Tests Fail
-
-Ensure that:
-
-Loopback OPC UA TCP communication is available
-Required dependencies are installed
-Test certificates can be generated
-No stale certificate configuration is interfering with the test environment
-
-The security tests generate their own development certificates and do not require a production certificate authority.
-
-Limitations & Scope
+        INDUSTRIAL COMMUNICATION
+                  │
+                  ▼
+           Simulated Plant
+                  │
+                  ▼
+            OPC UA Server
+                  │
+                  ▼
+             OPC UA Client
+                  │
+          ┌───────┼────────┐
+          ▼       ▼        ▼
+       Read/Write Methods Subscriptions
+          │       │        │
+          └───────┼────────┘
+                  ▼
+           Automated Tests
+                  │
+        ┌─────────┼──────────┐
+        ▼         ▼          ▼
+   Functional  Negative   Security
+        │         │          │
+        └─────────┼──────────┘
+                  ▼
+             Test Evidence
+                  │
+        ┌─────────┼─────────┐
+        ▼         ▼         ▼
+      Logs     Reports   Coverage
+                  │
+                  ▼
+             GitHub Actions
+🚧 Limitations & Scope
 
 This project intentionally focuses on automated OPC UA communication testing using a deterministic local simulation.
 
 It does not implement:
 
-Production ABB hardware integration
+Real ABB hardware integration
 Real PLC/controller communication
+Production ABB systems
 Production PKI/CA infrastructure
 Certificate revocation infrastructure
 TLS transport
@@ -456,7 +697,7 @@ Safety-critical control logic
 
 The simulated OPC UA server is localhost-only and is intended for automated QA, experimentation, and learning.
 
-Future Improvements
+🔮 Future Improvements
 
 Potential extensions include:
 
@@ -470,37 +711,57 @@ Expanded security negative testing
 Test-result dashboards
 Containerized OPC UA test environments
 Parallelized test execution
-Key Takeaway
+Additional protocol compliance scenarios
+🏁 Key Takeaway
 
-The project demonstrates a practical approach to testing industrial communication software:
+This project demonstrates a practical approach to testing industrial communication software:
 
-Simulate
-   ↓
-Connect
-   ↓
-Browse & Interact
-   ↓
-Read / Write / Control
-   ↓
-Monitor Subscriptions
-   ↓
-Validate Failures & Security
-   ↓
-Generate Evidence
-   ↓
-Automate in CI
-
-The primary focus is on:
+┌───────────────┐
+│    SIMULATE   │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│    CONNECT    │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ BROWSE & READ │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ WRITE & CONTROL│
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│   MONITOR     │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ TEST FAILURES │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│ TEST SECURITY │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│    REPORT     │
+└───────┬───────┘
+        ↓
+┌───────────────┐
+│   CI/CD       │
+└───────────────┘
+Core Focus
 
 Repeatability · Test Isolation · Communication Reliability · Security Validation · Maintainable Automation
 
-Disclaimer
+⚠️ Disclaimer
 
-This is an independent portfolio project created for learning and demonstrating OPC UA testing and automation concepts.
+This is an independent portfolio project created for learning and demonstrating OPC UA testing, industrial communication, and automation concepts.
 
-It is not affiliated with, endorsed by, or representative of ABB, and it does not use real ABB hardware or proprietary ABB software.
+ 
 
 The simulated server and industrial plant are designed solely to provide a controlled environment for automated OPC UA testing.
 
 
-You can paste that entire block directly into **`README.md`** on GitHub.
+ 

@@ -1,0 +1,42 @@
+# Python bytecode and test caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local runtime output
+reports/*
+!reports/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Generated certificates and private keys
+certificates/*
+!certificates/.gitkeep
+*.pem
+*.key
+*.pfx
+*.p12
+*.der
+*.crt
+
+# Environment-specific settings
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

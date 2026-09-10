@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opcua-client-testing-framework"
+version = "0.1.0"
+description = "Pytest-based integration test foundation for OPC UA client-server communication."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "asyncua>=1.1.5",
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "pytest-html>=4.1",
+    "PyYAML>=6.0",
+]
+
+[tool.coverage.run]
+source = ["opcua_framework"]
+branch = true
+
+[tool.coverage.html]
+directory = "reports/coverage"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

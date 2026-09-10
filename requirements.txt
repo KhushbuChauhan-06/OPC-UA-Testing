@@ -1,0 +1,6 @@
+asyncua>=1.1.5
+pytest>=8.0
+pytest-asyncio>=0.23
+pytest-cov>=5.0
+pytest-html>=4.1
+PyYAML>=6.0

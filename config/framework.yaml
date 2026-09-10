@@ -1,0 +1,16 @@
+opcua:
+  endpoint: "opc.tcp://127.0.0.1:4840/abb-test-server/"
+  client_timeout_seconds: 4.0
+  simulation_interval_seconds: 0.2
+  subscription_publishing_interval_ms: 50
+  notification_timeout_seconds: 0.75
+  no_notification_timeout_seconds: 0.25
+
+sensors:
+  Temperature: {minimum: 40.0, maximum: 45.0, expected_type: float}
+  Pressure: {minimum: 5.8, maximum: 6.6, expected_type: float}
+  Vibration: {minimum: 0.05, maximum: 0.11, expected_type: float}
+
+test_values:
+  motor_speed: 900
+  subscription_motor_speed: 1200

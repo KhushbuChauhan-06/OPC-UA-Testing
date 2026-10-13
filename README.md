@@ -164,7 +164,7 @@ The framework follows a layered architecture where Pytest drives the test scenar
 The project uses a localhost-only simulated OPC UA server.
 
 Endpoint
-opc.tcp://127.0.0.1:4840/abb-test-server/
+opc.tcp://127.0.0.1:4840/test-server/
 
 The server exposes a simplified IndustrialPlant containing representative process and motor data.
 
@@ -439,11 +439,11 @@ py -3.11 -m opcua_framework.server
 
 Default endpoint:
 
-opc.tcp://127.0.0.1:4840/abb-test-server/
+opc.tcp://127.0.0.1:4840/test-server/
 
 To use another local port:
 
-$env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/abb-test-server/"
+$env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/test-server/"
 
 Then run:
 
@@ -491,7 +491,7 @@ Security-related test configuration
 
 The endpoint can be overridden using:
 
-$env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/abb-test-server/"
+$env:OPCUA_ENDPOINT="opc.tcp://127.0.0.1:4841/test-server/"
 Security Rule
 
 Credentials and private-key paths must never be committed to Git.
@@ -686,9 +686,9 @@ This project intentionally focuses on automated OPC UA communication testing usi
 
 It does not implement:
 
-Real ABB hardware integration
+Real  hardware integration
 Real PLC/controller communication
-Production ABB systems
+Production  systems
 Production PKI/CA infrastructure
 Certificate revocation infrastructure
 TLS transport
